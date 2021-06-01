@@ -8,8 +8,8 @@ namespace CabInvoiceGenerator
 {
     public class InvoiceGenerator
     {
-        RideType rideType;
-        private RideRepository rideRepository;
+        readonly RideType rideType;
+        private readonly RideRepository rideRepository;
         private readonly double MINIMUM_COST_PER_KM;
         private readonly int COST_PER_TIME;
         private readonly double MINIMUM_FARE;
@@ -100,6 +100,9 @@ namespace CabInvoiceGenerator
                 throw new CabInvoiceException(CabInvoiceException.ExceptionType.INVALID_USER_ID, "Invalid user id");
             }
         }
-
+        public RideRepository GetRepo()
+        {
+            return rideRepository;
+        }
     }
 }

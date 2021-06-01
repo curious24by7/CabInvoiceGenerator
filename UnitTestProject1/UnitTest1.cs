@@ -7,7 +7,7 @@ using Assert = NUnit.Framework.Assert;
 namespace UnitTestProject1
 {
     [TestClass]
-    public class Tests
+    class Tests
     {
         InvoiceGenerator invoiceGenerator = null;
         [SetUp]
@@ -41,6 +41,21 @@ namespace UnitTestProject1
             InvoiceSummary enhancedSummary = invoiceGenerator.CalculateFare(rides);
             InvoiceSummary expectedEnhancedSummary = new InvoiceSummary(2, 30);
             Assert.AreEqual(expectedEnhancedSummary, enhancedSummary);
+        }
+        [Test]
+        public void GivenUserId_ShouldReturn_RideListAndInvoice()
+        {
+            invoiceGenerator = new InvoiceGenerator(RideType.NORMAL);
+            Ride[] ride1 = { new Ride(6.0, 7), new Ride(3.0, 5), new Ride(0.6, 3) };
+            Ride[] ride2 = { new Ride(5.0, 7), new Ride(15.0, 27), new Ride(9.0, 15) };
+            string P1 = "Tony";
+            string P2 = "Chris";
+            RideRepository rideRepository = invoiceGenerator.GetRepo();
+            rideRepository.AddRide(P1, ride1);
+            rideRepository.AddRide(P2, ride2);
+            InvoiceSummary invoice_P1 = invoiceGenerator.GetInvoiceSummary(P1);
+            InvoiceSummary expectedInvoice_P1 = new InvoiceSummary(3, 65);
+            Assert.AreEqual(invoice_P1, expectedInvoice_P1);
         }
     }
 }
